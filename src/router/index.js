@@ -15,6 +15,16 @@ const routes = [
     { path: '/register', component: Register, meta: { isFooterShow: false } },
     { path: '/', redirect: "/home" }
 ]
+
+// 重写push方法
+const originPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function (location, resolve, reject) {
+    if (resolve && reject) {
+        originPush.call(this, location, resolve, reject)
+    } else {
+        originPush.call(this, location, () => { }, () => { })
+    }
+}
 // 导出路由
 export default new VueRouter({
     routes
