@@ -7,7 +7,6 @@
     <Like />
     <Floor />
     <Brand />
-    {{count}}
   </div>
 </template>
 

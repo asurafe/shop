@@ -3,11 +3,7 @@ import App from './App.vue'
 import router from "@/router"
 import store from "@/store"
 // 注册三级联动全局组件
-import TypeNav from "@/pages/Home/TypeNav"
-
-import {getCategoryList} from "@/api"
-
-getCategoryList();
+import TypeNav from "@/components/TypeNav"
 
 Vue.component(TypeNav.name, TypeNav)
 
