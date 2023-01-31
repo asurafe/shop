@@ -1,19 +1,22 @@
 <template>
   <div class="type-nav">
     <div class="container">
-      <h2 class="all">全部商品分类</h2>
+      <h2 class="all" @mouseenter="showList" @mouseleave="hideList">
+        全部商品分类
+      </h2>
       <nav class="nav">
         <a href="" v-for="item in commodityList">{{ item }}</a>
       </nav>
       <!-- 三级联动 -->
-      <div class="sort">
+      <transition name="sort">
+        <div class="sort" v-show="show">
         <div class="all-sort-list2" @click="goSearch">
           <div
             class="item"
             v-for="item in categoryList"
             :key="item.categoryId"
             :class="{ 'item-hover': item.categoryId == currentIndex }"
-            @mouseover="mouseover(item.categoryId)"
+            @mouseenter="mouseover(item.categoryId)"
             @mouseleave="currentIndex = -1"
           >
             <!-- 一级菜单 -->
@@ -60,6 +63,8 @@
           </div>
         </div>
       </div>
+      </transition>
+
     </div>
   </div>
 </template>
@@ -72,12 +77,15 @@ export default {
   data() {
     return {
       currentIndex: -1,
+      show: true,
     };
   },
   methods: {
+    // 鼠标移入三级联动组件节流
     mouseover: throttle(function (index) {
       this.currentIndex = index;
     }, 50),
+    // 跳转到search页
     goSearch(event) {
       const { categoryname, category1id, category2id, category3id } =
         event.target.dataset;
@@ -95,9 +103,21 @@ export default {
         this.$router.push(location);
       }
     },
+    // 鼠标移入显示三级联动组件
+    showList() {
+      this.show = true;
+    }, 
+    hideList() {
+      if (this.$route.name == "search") {
+        this.currentIndex = -1
+        this.show = false;
+      }
+    }
   },
   mounted() {
-    this.$store.dispatch("categoryList");
+    if (this.$route.name == "search") {
+      this.show = false;
+    }
   },
   computed: {
     ...mapState({
@@ -127,6 +147,7 @@ export default {
       color: #fff;
       font-size: 14px;
       font-weight: bold;
+      cursor: pointer;
     }
 
     .nav {
@@ -221,6 +242,15 @@ export default {
           background-color: skyblue;
         }
       }
+    }
+    .sort-enter{
+      height: 0px;
+    }
+    .sort-enter-to{
+      height: 461px;
+    }
+    .sort-enter-active{
+      transition: all .2s linear;
     }
   }
 }

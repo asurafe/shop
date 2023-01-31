@@ -2,7 +2,7 @@
   <div id="app">
     <Header />
     <router-view />
-    <Footer v-if="$route.meta.isFooterShow"/>
+    <Footer v-if="$route.meta.isFooterShow" />
   </div>
 </template>
 
@@ -10,13 +10,15 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 export default {
-  name: 'App',
-  components:{
+  name: "App",
+  components: {
     Header,
-    Footer
-  }
-}
+    Footer,
+  },
+  mounted() {
+    this.$store.dispatch("categoryList");
+  },
+};
 </script>
 
-<style>
-</style>
+<style></style>

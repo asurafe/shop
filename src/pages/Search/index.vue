@@ -1,5 +1,7 @@
 <template>
-  <h1>{{$route.query.keyWord}}</h1>
+  <div>
+    <TypeNav />
+  </div>
 </template>
 
 <script>
