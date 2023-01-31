@@ -7,7 +7,7 @@
       </nav>
       <!-- 三级联动 -->
       <div class="sort">
-        <div class="all-sort-list2">
+        <div class="all-sort-list2" @click="goSearch">
           <div
             class="item"
             v-for="item in categoryList"
@@ -18,8 +18,13 @@
           >
             <!-- 一级菜单 -->
             <h3>
-              <a href="">{{ item.categoryName }}</a>
+              <a
+                :data-categoryName="item.categoryName"
+                :data-category1id="item.categoryId"
+                >{{ item.categoryName }}</a
+              >
             </h3>
+            <!-- 二级菜单、三级菜单 -->
             <div
               class="item-list clearfix"
               v-show="item.categoryId == currentIndex"
@@ -31,14 +36,22 @@
               >
                 <dl class="fore">
                   <dt>
-                    <a href="">{{ item1.categoryName }}</a>
+                    <a
+                      :data-categoryName="item1.categoryName"
+                      :data-category2id="item1.categoryId"
+                      >{{ item1.categoryName }}</a
+                    >
                   </dt>
                   <dd>
                     <em
                       v-for="item2 in item1.categoryChild"
                       :key="item2.categoryId"
                     >
-                      <a href="">{{ item2.categoryName }}</a>
+                      <a
+                        :data-categoryName="item2.categoryName"
+                        :data-category3id="item2.categoryId"
+                        >{{ item2.categoryName }}</a
+                      >
                     </em>
                   </dd>
                 </dl>
@@ -65,6 +78,23 @@ export default {
     mouseover: throttle(function (index) {
       this.currentIndex = index;
     }, 50),
+    goSearch(event) {
+      const { categoryname, category1id, category2id, category3id } =
+        event.target.dataset;
+      if (categoryname) {
+        const location = { name: "search" };
+        const query = { categoryName: categoryname };
+        if (category1id) {
+          query.category1id = category1id;
+        } else if (category2id) {
+          query.category2id = category2id;
+        } else {
+          query.category3id = category3id;
+        }
+        location.query = query;
+        this.$router.push(location);
+      }
+    },
   },
   mounted() {
     this.$store.dispatch("categoryList");
@@ -193,5 +223,8 @@ export default {
       }
     }
   }
+}
+a {
+  cursor: pointer;
 }
 </style>
