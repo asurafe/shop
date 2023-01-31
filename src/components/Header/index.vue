@@ -60,12 +60,16 @@ export default {
   },
   methods: {
     goSearch() {
-      this.$router.push({
-        name: "search",
-        query: {
-          keyWord: this.keyWord,
-        },
-      });
+      if (this.$route.query) {
+        const location = {
+          name: "search",
+          params: {
+            keyword: this.keyWord || undefined,
+          },
+        };
+        location.query = this.$route.query;
+        this.$router.push(location);
+      }
     },
   },
 };

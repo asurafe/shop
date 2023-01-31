@@ -83,8 +83,9 @@ export default {
   methods: {
     // 鼠标移入三级联动组件节流
     mouseover: throttle(function (index) {
+      this.show = true
       this.currentIndex = index;
-    }, 50),
+    }, 10),
     // 跳转到search页
     goSearch(event) {
       const { categoryname, category1id, category2id, category3id } =
@@ -99,8 +100,11 @@ export default {
         } else {
           query.category3id = category3id;
         }
-        location.query = query;
-        this.$router.push(location);
+        if(this.$route.params){
+          location.query = query
+          location.params = this.$route.params
+          this.$router.push(location);
+        }
       }
     },
     // 鼠标移入显示三级联动组件

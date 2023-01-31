@@ -11,7 +11,7 @@ Vue.use(VueRouter)
 const routes = [
     { path: '/home', component: Home, meta: { isFooterShow: true } },
     { path: '/login', component: Login, meta: { isFooterShow: false } },
-    { name: 'search', path: '/search', component: Search, meta: { isFooterShow: true } },
+    { name: 'search', path: '/search/:keyword?', component: Search, meta: { isFooterShow: true } },
     { path: '/register', component: Register, meta: { isFooterShow: false } },
     { path: '/', redirect: "/home" }
 ]
