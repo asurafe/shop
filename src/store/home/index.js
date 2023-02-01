@@ -1,8 +1,9 @@
-import { getCategoryList, getBannerList } from "@/api"
+import { getCategoryList, getBannerList, getFloorList } from "@/api"
 // home模块状态管理
 const state = {
     categoryList: [],
     bannerList: [],
+    floorList: [],
     commodityList: ["服装城", '美妆馆', '尚品汇超市', '全球购', '闪购', '团购', '有趣', '秒杀']
 }
 const mutations = {
@@ -11,6 +12,9 @@ const mutations = {
     },
     BANNERLIST(state, bannerList) {
         state.bannerList = bannerList
+    },
+    FLOORLIST(state, floorList) {
+        state.floorList = floorList
     }
 }
 const actions = {
@@ -24,6 +28,13 @@ const actions = {
         const res = await getBannerList();
         if (res.code == 200) {
             commit('BANNERLIST', res.data)
+        }
+    },
+    async getFloorList({ commit }) {
+        const res = await getFloorList();
+        console.log(res)
+        if (res.code == 200) {
+            commit('FLOORLIST', res.data)
         }
     }
 }

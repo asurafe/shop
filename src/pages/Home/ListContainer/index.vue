@@ -3,7 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <div class="swiper-container" ref="mySwiper">
           <div class="swiper-wrapper">
             <div
               class="swiper-slide"
@@ -104,7 +104,7 @@ export default {
   watch: {
     bannerList(newValue, oldValue) {
       this.$nextTick(() => {
-        let mySwiper = new Swiper(document.querySelector(".swiper-container"), {
+        let mySwiper = new Swiper(this.$refs.mySwiper, {
           loop: true,
           // 分页器
           pagination: {

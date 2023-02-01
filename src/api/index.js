@@ -15,3 +15,10 @@ export const getBannerList = () => {
         method: 'get' 
     })
 }
+
+export const getFloorList = () => {
+    return mockRequest({
+        url: '/floor',
+        method: 'get'
+    })
+}
