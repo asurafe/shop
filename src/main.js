@@ -9,8 +9,10 @@ import 'swiper/css/swiper.css'
 
 // 注册三级联动全局组件
 import TypeNav from "@/components/TypeNav"
+import Carousel from "@/components/Carousel"
 
 Vue.component(TypeNav.name, TypeNav)
+Vue.component(Carousel.name, Carousel)
 
 new Vue({
   render: h => h(App),
