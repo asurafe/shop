@@ -11,13 +11,14 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
+            <li class="with-x" v-if="searchParams.trademark">{{searchParams.trademark.split(":")[1]}}<i @click="removeTrademark">x</i></li>
             <li class="with-x" v-if="searchParams.categoryName">{{searchParams.categoryName}}<i @click="removeCategoryName">x</i></li>
             <li class="with-x" v-if="searchParams.keyword">{{searchParams.keyword}}<i @click="removeKeyword">x</i></li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <SearchSelector @tradeMark="tradeMark"/>
 
         <!--details-->
         <div class="details clearfix">
@@ -149,6 +150,10 @@ export default {
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
+    tradeMark(trademark){
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`
+      this.getData();
+    },
     removeCategoryName() {
       this.searchParams.categoryName = undefined;
       this.searchParams.category1Id = undefined;
@@ -161,6 +166,10 @@ export default {
       this.searchParams.keyword = undefined;
       this.$bus.$emit('clear')
       this.$router.push({name:'search',query:this.$route.query}) 
+    },
+    removeTrademark(){
+      this.searchParams.trademark = undefined;
+      this.getData();
     }
   },
   beforeMount() {
