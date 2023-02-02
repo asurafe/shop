@@ -11,12 +11,24 @@ const mutations = {
 const actions = {
     async getSearchList({ commit }, params = {}) {
         const res = await getSearchList(params)
+        console.log(res.data)
         if (res.code == 200) {
             commit('GETSEARCHLIST', res.data)
         }
     }
 }
-const getters = {}
+const getters = {
+    attrsList(state){
+        return state.searchList.attrsList || []
+    },
+    goodsList(state){
+        return state.searchList.goodsList || []
+    },
+    trademarkList(state){
+        return state.searchList.trademarkList || []
+    }
+
+}
 
 export default {
     state,

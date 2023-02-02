@@ -9,7 +9,7 @@
       </nav>
       <!-- 三级联动 -->
       <transition name="sort">
-        <div class="sort" v-show="show">
+        <div class="sort" v-show="show" @mouseleave="hideList">
         <div class="all-sort-list2" @click="goSearch">
           <div
             class="item"
