@@ -23,7 +23,7 @@
       <div class="fl value">
         <ul class="type-list">
           <li v-for="item1 in item.attrValueList">
-            <a>{{ item1 }}</a>
+            <a :style="{cursor:'pointer'}" @click="tradeProps(item,item1)">{{ item1 }}</a>
           </li>
         </ul>
       </div>
@@ -40,6 +40,9 @@ export default {
     tradeMark(trademark) {
       this.$emit("tradeMark", trademark);
     },
+    tradeProps(id,props){
+      this.$emit("tradeProps",id.attrName,id.attrId,props)
+    }
   },
   computed: {
     ...mapGetters(["trademarkList", "attrsList"]),

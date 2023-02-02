@@ -11,14 +11,29 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x" v-if="searchParams.trademark">{{searchParams.trademark.split(":")[1]}}<i @click="removeTrademark">x</i></li>
-            <li class="with-x" v-if="searchParams.categoryName">{{searchParams.categoryName}}<i @click="removeCategoryName">x</i></li>
-            <li class="with-x" v-if="searchParams.keyword">{{searchParams.keyword}}<i @click="removeKeyword">x</i></li>
+            <li class="with-x" v-if="searchParams.trademark">
+              {{ searchParams.trademark.split(":")[1]
+              }}<i @click="removeTrademark">x</i>
+            </li>
+            <li class="with-x" v-if="searchParams.categoryName">
+              {{ searchParams.categoryName
+              }}<i @click="removeCategoryName">x</i>
+            </li>
+            <li class="with-x" v-if="searchParams.keyword">
+              {{ searchParams.keyword }}<i @click="removeKeyword">x</i>
+            </li>
+            <li
+              class="with-x"
+              v-for="(attrValue, index) in searchParams.props"
+              :key="index"
+            >
+              {{ attrValue.split(":")[1] }}<i @click="removeAttr(index)">x</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector @tradeMark="tradeMark"/>
+        <SearchSelector @tradeMark="tradeMark" @tradeProps="tradeProps" />
 
         <!--details-->
         <div class="details clearfix">
@@ -150,8 +165,15 @@ export default {
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
-    tradeMark(trademark){
-      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`
+    tradeMark(trademark) {
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
+      this.getData();
+    },
+    tradeProps(name, id, props) {
+      const prop = `${id}:${props}:${name}`;
+      if (this.searchParams.props.indexOf(prop) == -1) {
+        this.searchParams.props.push(prop);
+      }
       this.getData();
     },
     removeCategoryName() {
@@ -160,17 +182,21 @@ export default {
       this.searchParams.category2Id = undefined;
       this.searchParams.category3Id = undefined;
       // 更改地址栏上路由地址
-      this.$router.push({name:'search',params:this.$route.params}) 
+      this.$router.push({ name: "search", params: this.$route.params });
     },
-    removeKeyword(){
+    removeKeyword() {
       this.searchParams.keyword = undefined;
-      this.$bus.$emit('clear')
-      this.$router.push({name:'search',query:this.$route.query}) 
+      this.$bus.$emit("clear");
+      this.$router.push({ name: "search", query: this.$route.query });
     },
-    removeTrademark(){
+    removeTrademark() {
       this.searchParams.trademark = undefined;
       this.getData();
-    }
+    },
+    removeAttr(index) {
+      this.searchParams.props.splice(index, 1);
+      this.getData();
+    },
   },
   beforeMount() {
     Object.assign(this.searchParams, this.$route.query, this.$route.params);
@@ -182,9 +208,9 @@ export default {
     $route() {
       Object.assign(this.searchParams, this.$route.query, this.$route.params);
       this.getData();
-      this.searchParams.category1Id = '';
-      this.searchParams.category2Id = '';
-      this.searchParams.category3Id = '';
+      this.searchParams.category1Id = "";
+      this.searchParams.category2Id = "";
+      this.searchParams.category3Id = "";
     },
   },
   computed: {
