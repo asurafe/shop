@@ -11,10 +11,8 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="searchParams.categoryName">{{searchParams.categoryName}}<i @click="removeCategoryName">x</i></li>
+            <li class="with-x" v-if="searchParams.keyword">{{searchParams.keyword}}<i @click="removeKeyword">x</i></li>
           </ul>
         </div>
 
@@ -151,12 +149,34 @@ export default {
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
+    removeCategoryName() {
+      this.searchParams.categoryName = undefined;
+      this.searchParams.category1Id = undefined;
+      this.searchParams.category2Id = undefined;
+      this.searchParams.category3Id = undefined;
+      // 更改地址栏上路由地址
+      this.$router.push({name:'search',params:this.$route.params}) 
+    },
+    removeKeyword(){
+      this.searchParams.keyword = undefined;
+      this.$bus.$emit('clear')
+      this.$router.push({name:'search',query:this.$route.query}) 
+    }
   },
-  beforeMount(){
-    Object.assign(this.searchParams,this.$route.query,this.$route.params)
+  beforeMount() {
+    Object.assign(this.searchParams, this.$route.query, this.$route.params);
   },
   mounted() {
     this.getData();
+  },
+  watch: {
+    $route() {
+      Object.assign(this.searchParams, this.$route.query, this.$route.params);
+      this.getData();
+      this.searchParams.category1Id = '';
+      this.searchParams.category2Id = '';
+      this.searchParams.category3Id = '';
+    },
   },
   computed: {
     ...mapGetters(["goodsList"]),

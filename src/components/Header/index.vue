@@ -72,6 +72,11 @@ export default {
       }
     },
   },
+  mounted() {
+    this.$bus.$on("clear", () => {
+      this.keyWord = "";
+    });
+  },
 };
 </script>
 
