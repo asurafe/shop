@@ -48,34 +48,23 @@ export default {
   name: "Pagination",
   props: ["pageNo", "pageSize", "total", "continues"],
   computed: {
-    //总共多少页
     totalPage() {
-      //向上取证
       return Math.ceil(this.total / this.pageSize);
     },
-    //计算出连续的页码的起始数字与结束数字[连续页码的数字:至少是5]
     startNumAndEndNum() {
       const { continues, pageNo, totalPage } = this;
-      //先定义两个变量存储起始数字与结束数字
       let start = 0,
         end = 0;
-      //连续页码数字5【就是至少五页】，如果出现不正常的现象【就是不够五页】
-      //不正常现象【总页数没有连续页码多】
       if (continues > totalPage) {
         start = 1;
         end = totalPage;
       } else {
-        //正常现象【连续页码5，但是你的总页数一定是大于5的】
-        //起始数字
         start = pageNo - parseInt(continues / 2);
-        //结束数字
         end = pageNo + parseInt(continues / 2);
-        //把出现不正常的现象【start数字出现0|负数】纠正
         if (start < 1) {
           start = 1;
           end = continues;
         }
-        //把出现不正常的现象[end数字大于总页码]纠正
         if (end > totalPage) {
           end = totalPage;
           start = totalPage - continues + 1;
