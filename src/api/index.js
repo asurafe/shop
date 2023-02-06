@@ -30,3 +30,10 @@ export const getSearchList = (data) => {
         data
     })
 }
+
+export const getDetail = (skuId) => {
+    return request({
+        url: `/item/${skuId}`,
+        method: 'get',
+    })
+}
