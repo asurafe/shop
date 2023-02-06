@@ -112,14 +112,14 @@ export default {
       this.show = true;
     }, 
     hideList() {
-      if (this.$route.name == "search") {
+      if (this.$route.name == "search"|| this.$route.name == "detail") {
         this.currentIndex = -1
         this.show = false;
       }
     }
   },
   mounted() {
-    if (this.$route.name == "search") {
+    if (this.$route.name == "search" || this.$route.name == "detail") {
       this.show = false;
     }
   },
