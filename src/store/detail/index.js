@@ -1,10 +1,10 @@
-import { getDetail } from "@/api";
+import { getDetail,addOrUpdateShopCart } from "@/api";
 
 const state = {
-    goodDetail:{}
+    goodDetail: {}
 }
 const mutations = {
-    GETGOODSDETAIL(state,goodDetail){
+    GETGOODSDETAIL(state, goodDetail) {
         state.goodDetail = goodDetail
     }
 }
@@ -14,16 +14,24 @@ const actions = {
         if (res.code == 200) {
             commit('GETGOODSDETAIL', res.data)
         }
-    }
+    },
+    async addOrUpdateShopCart({ commit }, { skuId, skuNum }) {
+        let result = await addOrUpdateShopCart(skuId, skuNum);
+        if (result.code == 200) {
+            return "ok";
+        } else {
+            return Promise.reject(new Error("faile"));
+        }
+    },
 }
 const getters = {
-    categoryView(state){
+    categoryView(state) {
         return state.goodDetail.categoryView || {}
     },
-    skuInfo(state){
+    skuInfo(state) {
         return state.goodDetail.skuInfo || {}
     },
-    spuSaleAttrList(state){
+    spuSaleAttrList(state) {
         return state.goodDetail.spuSaleAttrList || []
     }
 }

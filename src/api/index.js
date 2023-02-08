@@ -37,3 +37,10 @@ export const getDetail = (skuId) => {
         method: 'get',
     })
 }
+
+export const addOrUpdateShopCart = (skuId, skuNum) => {
+    return request({
+        url: `/cart/addToCart/${skuId}/${skuNum}`,
+        method: "post"
+    })
+}
