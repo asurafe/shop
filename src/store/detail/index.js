@@ -1,7 +1,10 @@
-import { getDetail,addOrUpdateShopCart } from "@/api";
+import { getDetail, addOrUpdateShopCart } from "@/api";
+import { getUUID } from '@/utils/uuid_token';
+
 
 const state = {
-    goodDetail: {}
+    goodDetail: {},
+    uuid_token:getUUID()
 }
 const mutations = {
     GETGOODSDETAIL(state, goodDetail) {

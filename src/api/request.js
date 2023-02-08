@@ -5,6 +5,8 @@ import axios from 'axios';
 import nprogress from 'nprogress';
 import "nprogress/nprogress.css"
 
+import store from '@/store';
+
 // 创建axios实例
 const request = axios.create({
     baseURL: '/api',
@@ -14,6 +16,12 @@ const request = axios.create({
 // nprogress.done()  结束进度条
 request.interceptors.request.use((config) => {
     nprogress.start();
+    if (store.state.detail.uuid_token) {
+        config.headers.userTempId = store.state.detail.uuid_token;
+    }
+    // if(store.state.user.token){
+    //     config.headers.token = store.state.user.token;
+    // }
     return config
 })
 
