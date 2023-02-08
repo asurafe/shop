@@ -44,3 +44,27 @@ export const addOrUpdateShopCart = (skuId, skuNum) => {
         method: "post"
     })
 }
+
+//获取购物车列表数据接口
+//URL:/api/cart/cartList   method:get 
+export const reqCartList = () => {
+    return request({
+        url: '/cart/cartList ',
+        method: 'get'
+    });
+}
+
+//删除购物产品的接口
+export const reqDeleteCartById = (skuId) => {
+    return request({
+        url: `/cart/deleteCart/${skuId}`,
+        method: 'delete'
+    })
+};
+//修改商品的选中状态
+export const reqUpdateCheckedByid = (skuId, isChecked) => {
+    return request({
+        url: `/cart/checkCart/${skuId}/${isChecked}`,
+        method: 'get'
+    })
+};
