@@ -35,7 +35,6 @@ const actions = {
   },
   //删除全部勾选的产品
   deleteAllCheckedCart({ dispatch, getters }) {
-    //context:小仓库，commit【提交mutations修改state】 getters【计算属性】 dispatch【派发action】 state【当前仓库数据】
     //获取购物车中全部的产品（是一个数组）
     let PromiseAll = [];
     getters.cartList.cartInfoList.forEach((item) => {

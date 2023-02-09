@@ -427,7 +427,6 @@ export default {
       },
     }),
     skuImageList() {
-      console.log(this.skuInfo)
       return this.skuInfo.skuImageList || [];
     },
   },

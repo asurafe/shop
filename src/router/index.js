@@ -19,7 +19,7 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
     if (resolve && reject) {
         originReplace.call(this, location, resolve, reject)
     } else {
-        originReplace.call(this.location, () => { }, () => { })
+        originReplace.call(this, location, () => { }, () => { })
     }
 }
 // 导出路由
