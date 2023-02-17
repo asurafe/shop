@@ -61,6 +61,7 @@ export const reqDeleteCartById = (skuId) => {
         method: 'delete'
     })
 };
+
 //修改商品的选中状态
 export const reqUpdateCheckedByid = (skuId, isChecked) => {
     return request({
@@ -68,3 +69,20 @@ export const reqUpdateCheckedByid = (skuId, isChecked) => {
         method: 'get'
     })
 };
+
+// 获取注册验证码
+export const getRegisterCode = (phone) =>{
+    return request({
+        url:`/user/passport/sendCode/${phone}`,
+        method: 'get'
+    })
+}
+
+// 注册账号
+export const register = (data) =>{
+    return request({
+        url:'/user/passport/register',
+        method:'post',
+        data
+    })
+}
